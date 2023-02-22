@@ -1,0 +1,82 @@
+/* Général */
+.container {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+/* Résumé du jeu (points, niveau, séquence) */
+.dataGame span {
+    font-weight: bold;
+}
+
+/* Le cercle principal */
+.boardGame {
+    background-color: black;
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border-radius: 50%;
+    margin: 2rem auto;
+}
+
+/* Compteur de séquence au centre */
+.boardGame #counter {
+    background-color: black;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(50% - 50px);
+    bottom: calc(50% - 50px);
+    right: calc(50% - 50px);
+    left: calc(50% - 50px);
+    border-radius: 50%;
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Les 4 quartiers du cercle */
+.boardGame > .quarter {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+#quarter-0 {
+    background-color: rgba(91, 5, 117, 0.829);
+    top: 0;
+    left: 0;
+    border-radius: 100% 0 0 0;
+}
+
+#quarter-1 {
+    background-color: rgb(250, 59, 155);
+    top: 0;
+    right: 0;
+    border-radius: 0 100% 0 0;
+}
+
+#quarter-2 {
+    background-color: rgb(40, 236, 217);
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 0 100%;
+}
+
+#quarter-3 {
+    background-color: rgb(243, 111, 23);
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 100% 0;
+}
