@@ -1,3 +1,5 @@
+
+export const QUARTERS_COUNT = 4;
 export default class Game {
     constructor() {
         this.points = 0;
