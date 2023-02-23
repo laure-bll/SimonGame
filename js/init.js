@@ -1,7 +1,7 @@
 
 /**
  * INITIALISATION (getters) :
- * Initialise les propriétés du tableau de bord (points, niveau, taille de la séquence).
+ * Définit les propriétés du tableau de bord (points, niveau, taille séquence).
  * Récupère tous les éléments du DOM à utiliser pour le déroulement du jeu.
  */
 export default class Init {
@@ -21,14 +21,16 @@ export default class Init {
      * - le terrain de jeu (contenant les éléments cliquables).
      */
     init() {
+        this.getBodyElement();
         this.getDashBoardElements()
         this.getBoardGameElements();
         this.getButtonElements();
         this.getPlayGroundElement();
+        this.getMessageElement();
     }
 
     getDashBoardElements() {
-        // Récupère les 3 informations de jeu (points, niveau, taille de la séquence).
+        // Récupère les 3 informations de jeu (points, niveau, taille séquence).
         this.pointsElement = document.getElementById("points");
         this.levelElement = document.getElementById("level");
         this.sequenceElement = document.getElementById("sequence");
@@ -55,5 +57,15 @@ export default class Init {
     getPlayGroundElement() {
         // Récupère la zone de jeu contenant les éléments cliquables.
         this.playground = document.getElementById("playground");
+    }
+
+    getBodyElement() {
+        // Récupère le "body" pour ajouter un fond rouge en cas d'erreur.
+        this.body = document.querySelector("body");
+    }
+
+    getMessageElement() {
+        // Récupère l'élément permettant d'afficher un message au joueur.
+        this.message = document.getElementById("message");
     }
 }

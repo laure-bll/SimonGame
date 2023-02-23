@@ -1,6 +1,13 @@
 /* Général */
+body {
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 .container {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -16,7 +23,7 @@
 
 /* Le cercle principal */
 .boardGame {
-    background-color: white;
+    background-color: transparent;
     width: 300px;
     height: 300px;
     position: relative;
@@ -26,7 +33,7 @@
 
 /* Compteur de séquence au centre */
 .boardGame #counter {
-    background-color: black;
+    background-color: #08034d;
     width: 100px;
     height: 100px;
     position: absolute;
@@ -35,7 +42,7 @@
     right: calc(50% - 50px);
     left: calc(50% - 50px);
     border-radius: 50%;
-    color: white;
+    color: #ffffff;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
@@ -50,34 +57,50 @@
     position: absolute;
     width: 150px;
     height: 150px;
-    border: 2px solid black;
+    border: 2px solid #08034d;
     cursor: pointer;
 }
 
 #quarter-0 {
-    background-color: rgba(91, 5, 117, 0.829);
+    background-color: #da78f8d3;
     top: 0;
     left: 0;
     border-radius: 100% 0 0 0;
 }
 
 #quarter-1 {
-    background-color: rgb(250, 59, 155);
+    background-color: #f35ea8;
     top: 0;
     right: 0;
     border-radius: 0 100% 0 0;
 }
 
 #quarter-2 {
-    background-color: rgb(40, 236, 217);
+    background-color: #6bfced;
     bottom: 0;
     left: 0;
     border-radius: 0 0 0 100%;
 }
 
 #quarter-3 {
-    background-color: rgb(243, 111, 23);
+    background-color: #f89959;
     bottom: 0;
     right: 0;
     border-radius: 0 0 100% 0;
+}
+
+/* Eléments temporaires */
+.alert {
+    background: linear-gradient(45deg, #8a0a0a, transparent) no-repeat;
+    transition: all 1s ease-out;
+}
+
+#message {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 1rem;
+    border: 2px solid #08034d;
+    background: #b3b1ee;
+    border-radius: 1rem;
+    visibility: hidden;
 }
