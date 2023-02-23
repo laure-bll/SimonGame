@@ -1,0 +1,106 @@
+/* Général */
+body {
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    font-family: 'Lucida Sans', Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+/* Résumé du jeu (points, niveau, séquence) */
+.dataGame span {
+    font-weight: bold;
+}
+
+/* Le cercle principal */
+.boardGame {
+    background-color: transparent;
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border-radius: 50%;
+    margin: 2rem auto;
+}
+
+/* Compteur de séquence au centre */
+.boardGame #counter {
+    background-color: #808080;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(50% - 50px);
+    bottom: calc(50% - 50px);
+    right: calc(50% - 50px);
+    left: calc(50% - 50px);
+    border-radius: 50%;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: default;
+}
+
+/* Les 4 quartiers du cercle */
+.boardGame > .quarter {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 2px solid #808080;
+    cursor: pointer;
+}
+
+#quarter-0 {
+    background-color: #da78f8d3;
+    top: 0;
+    left: 0;
+    border-radius: 100% 0 0 0;
+}
+
+#quarter-1 {
+    background-color: #f35ea8;
+    top: 0;
+    right: 0;
+    border-radius: 0 100% 0 0;
+}
+
+#quarter-2 {
+    background-color: #6bfced;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 0 100%;
+}
+
+#quarter-3 {
+    background-color: #f89959;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 100% 0;
+}
+
+/* Eléments temporaires */
+.alert {
+    background: linear-gradient(45deg, #8a0a0a, transparent) no-repeat;
+    transition: all 1s ease-out;
+}
+
+#message {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 1rem;
+    border: 2px solid #949191;
+    background: #ebe9e9b9;
+    border-radius: 1rem;
+    visibility: hidden;
+}
