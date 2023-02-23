@@ -1,4 +1,4 @@
-import Game from "./game.js";
+import Game, { QUARTERS_COUNT } from "./game.js";
 
 export default class Playing extends Game {
     constructor(props) {
@@ -6,9 +6,15 @@ export default class Playing extends Game {
     }
 
     playSequence() {
-        const count = this.sequence;
+        const sequence = this.sequence.map(_ => this.randomQuarter());
+    }
 
-        
+    /**
+     * Génère un chiffre aléatoire entre 0 et 3 car il y a un maximum de 4 quartiers.
+     * @returns number
+     */
+    randomQuarter() {
+        return Math.floor(Math.random() * (max = QUARTERS_COUNT));
     }
 
     /**
