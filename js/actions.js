@@ -11,8 +11,8 @@ export default class Actions extends Display {
 
         this.isGameStarted = false;
         this.isPlayerTurn = false;
-        this.computerSequence = [];
         this.playerSequence = [];
+        this.computerSequence = [];
         this.counter = this.sequenceLength;
     }
 
@@ -41,19 +41,21 @@ export default class Actions extends Display {
      * @param {Element} el
      */
     compareSequence(el) {
-        const playerSeq = this.playerSequence;
-        const computerSeq = this.computerSequence;
+        const selectedQuarter = this.quarters.indexOf(el);
+        this.playerSequence.push(selectedQuarter);
+        const i = this.playerSequence.length - 1;
+        const expectedQuarter = this.computerSequence[i];
 
-        playerSeq.push(this.quarters.indexOf(el));
-
-        if(playerSeq.length === computerSeq.length) {
-            JSON.stringify(playerSeq) === JSON.stringify(computerSeq)
-            ? this.nextLevel() : (
-                this.alertWrongSequence(),
-                this.counter = this.sequenceLength,
-                this.updateCounter(this.counter),
-                setTimeout(() => this.playSequence(), 2000)
-            );
+        if(selectedQuarter !== expectedQuarter) {
+            this.alertWrongSequence();
+            this.counter = this.sequenceLength;
+            this.updateCounter(this.counter);
+            this.playerSequence = [];
+            setTimeout(() => this.playSequence(), 3000);
+        } else {
+            if (JSON.stringify(this.playerSequence) === JSON.stringify(this.computerSequence)) {
+                this.nextLevel()
+            }
         }
     }
 
@@ -70,6 +72,7 @@ export default class Actions extends Display {
 
         // La séquence de l'ordinateur est réinitialisée.
         this.computerSequence = [];
+        this.removeMessage(),
         this.isPlayerTurn = false;
         this.playSequence();
     }
@@ -81,18 +84,19 @@ export default class Actions extends Display {
      */
     playSequence() {
         let count = 0;
+        this.playerTurn = false;
         this.playerSequence = [];
 
         const intvl = setInterval(() => {
             const index = this.computerSequence.length === this.sequenceLength
-            ? this.computerSequence[i] : this.randomQuarter();
+            ? this.computerSequence[count] : this.randomQuarter();
             
             this.computerSequence.length !== this.sequenceLength 
             ? this.computerSequence.push(index) : null;
 
             this.highlightQuarter(this.quarters[index]);
             
-            count ===( this.sequenceLength - 1)
+            count === (this.sequenceLength - 1)
             ? (clearInterval(intvl), (this.isPlayerTurn = true)) 
             : count += 1;
         }, 500);
@@ -121,6 +125,8 @@ export default class Actions extends Display {
         // Met à jour la vue avec les nouvelles valeurs.
         this.updateDashBoard();
         this.updateCounter();
+        // Affiche un message de réussite.
+        this.displayMessage(MESSAGES.winner);
         // L'ordinateur lance une nouvelle séquence.
         setTimeout(() => this.computerTurn(), 3000);
     }
