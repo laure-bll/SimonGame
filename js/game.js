@@ -56,8 +56,8 @@ class Game extends Display {
      * @param {Element} el
      */
     playerTurn(el) {
-        this.isGameStarted ?
-        this.isPlayerTurn && (
+        this.isGameStarted ? this.isPlayerTurn && 
+        (
             this.removeMessage(),
             this.highlightQuarter(el),
             this.counter -= 1,
@@ -103,6 +103,9 @@ class Game extends Display {
      * durant le tour de l'ordinateur.
      */
     computerTurn() {
+        this.computerSequence = [];
+        this.removeMessage();
+
         !this.isGameStarted ?
         (
             this.playSound(SOUNDS.robot),
@@ -113,9 +116,6 @@ class Game extends Display {
             }, 2000)
         )
         : this.playSequence();
-
-        this.computerSequence = [];
-        this.removeMessage();
     }
 
     /**
@@ -127,25 +127,36 @@ class Game extends Display {
         let count = 0;
         this.isPlayerTurn = false;
         this.playerSequence = [];
+        this.createSequence();
 
         const intvl = setInterval(() => {
-            const index = this.computerSequence.length === this.sequenceLength
-            ? this.computerSequence[count] : this.randomQuarter();
-            
-            this.computerSequence.length !== this.sequenceLength 
-            ? this.computerSequence.push(index) : null;
+            const index = this.computerSequence[count];
 
-            count === (this.sequenceLength - 1) || !this.isGameStarted
-            ? (
-                clearInterval(intvl),
-                this.isPlayerTurn = true
-            ) 
-            : count += 1;
-            
-            this.highlightQuarter(this.quarters[index]);
-            this.playSound(SOUNDS[`drum_${index}`]);
-            
+            if(this.isGameStarted) {
+                count === (this.sequenceLength - 1)
+                ? (
+                    clearInterval(intvl),
+                    this.isPlayerTurn = true
+                ) 
+                : count += 1;
+    
+                this.highlightQuarter(this.quarters[index]),
+                this.playSound(SOUNDS[`drum_${index}`])
+            } else {
+                clearInterval(intvl)
+            }
         }, 500);
+    }
+
+    /**
+     * Crée une nouvelle séquence pour l'ordinateur.
+     */
+    createSequence() {
+        if(!this.computerSequence.length) {
+            for(let i = 0; i < this.sequenceLength; i++) {
+                this.computerSequence.push(this.randomQuarter());
+            }
+        }
     }
 
     /**
