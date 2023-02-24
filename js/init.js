@@ -1,7 +1,7 @@
 
 /**
  * INITIALISATION (getters) :
- * Définit les propriétés du tableau de bord (points, niveau, taille séquence).
+ * Définit les propriétés du tableau de bord (points, niveau, taille séquence) et le compteur.
  * Récupère tous les éléments du DOM à utiliser pour le déroulement du jeu.
  */
 export default class Init {
@@ -9,6 +9,7 @@ export default class Init {
         this.points = 0;
         this.level = 1;
         this.sequenceLength = 4;
+        this.counter = this.sequenceLength;
 
         this.init();
     }
@@ -50,7 +51,7 @@ export default class Init {
 
     getButtonElements() {
         // Récupère les boutons "play" et "reset".
-        this.playButton = document.getElementById("play");
+        this.startButton = document.getElementById("play");
         this.resetButton = document.getElementById("reset");
     }
 

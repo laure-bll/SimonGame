@@ -17,76 +17,11 @@ body {
 }
 
 /* Résumé du jeu (points, niveau, séquence) */
+.dataGame {
+    margin-bottom: 1rem;
+}
 .dataGame span {
     font-weight: bold;
-}
-
-/* Le cercle principal */
-.boardGame {
-    background-color: transparent;
-    width: 300px;
-    height: 300px;
-    position: relative;
-    border-radius: 50%;
-    margin: 2rem auto;
-}
-
-/* Compteur de séquence au centre */
-.boardGame #counter {
-    background-color: #08034d;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: calc(50% - 50px);
-    bottom: calc(50% - 50px);
-    right: calc(50% - 50px);
-    left: calc(50% - 50px);
-    border-radius: 50%;
-    color: #ffffff;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    cursor: default;
-}
-
-/* Les 4 quartiers du cercle */
-.boardGame > .quarter {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border: 2px solid #08034d;
-    cursor: pointer;
-}
-
-#quarter-0 {
-    background-color: #da78f8d3;
-    top: 0;
-    left: 0;
-    border-radius: 100% 0 0 0;
-}
-
-#quarter-1 {
-    background-color: #f35ea8;
-    top: 0;
-    right: 0;
-    border-radius: 0 100% 0 0;
-}
-
-#quarter-2 {
-    background-color: #6bfced;
-    bottom: 0;
-    left: 0;
-    border-radius: 0 0 0 100%;
-}
-
-#quarter-3 {
-    background-color: #f89959;
-    bottom: 0;
-    right: 0;
-    border-radius: 0 0 100% 0;
 }
 
 /* Eléments temporaires */
@@ -98,9 +33,96 @@ body {
 #message {
     font-weight: 600;
     font-size: 0.9rem;
-    padding: 1rem;
-    border: 2px solid #08034d;
-    background: #b3b1ee;
-    border-radius: 1rem;
+    padding: 1rem 2rem;
+    background: #08034d;
+    color: #eeeefc;
+    border-radius: 4px;
     visibility: hidden;
+    min-width: 40%;
+    max-width: 80%;
+    margin: auto;
+    height: 20px;
+}
+
+/* Plateau de jeu */
+.boardGame {
+    background-color: transparent;
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border-radius: 50%;
+    margin: 2rem auto;
+}
+
+/* Compteur de séquence au centre du plateau */
+.boardGame #counter {
+    background-color: #08034d;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(50% - 50px);
+    bottom: calc(50% - 50px);
+    right: calc(50% - 50px);
+    left: calc(50% - 50px);
+    border-radius: 50%;
+    color: #eeeefc;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: default;
+}
+
+/* Les 4 quartiers du plateau */
+.boardGame > .quarter {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 2px solid #08034d;
+    cursor: pointer;
+}
+
+#quarter-0 {
+    background-color: #d75ffb;
+    top: 0;
+    left: 0;
+    border-radius: 100% 0 0 0;
+}
+
+#quarter-1 {
+    background-color: #ff0080;
+    top: 0;
+    right: 0;
+    border-radius: 0 100% 0 0;
+}
+
+#quarter-2 {
+    background-color: #2cedbd;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 0 100%;
+}
+
+#quarter-3 {
+    background-color: #ff791a;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 100% 0;
+}
+
+/* Boutons du jeu */
+button {
+    background: #08034d;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4rem;
+    color: #eeeefc;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+button#reset {
+    display: none;
 }

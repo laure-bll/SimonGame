@@ -1,8 +1,8 @@
 import Init from "./init.js";
 
 export const MESSAGES = {
-    looser: "You lost this round, try again !",
-    winner: "You win this round, get ready for the next level !",
+    looser: "Wrong, let's try again !",
+    winner: "Well played, get ready for the next level !",
     start: "Please, click the start button to start the game.",
     reset: "You reset the game ! Click the start button to try again."
 }
@@ -36,11 +36,9 @@ export default class Display extends Init {
     /**
      * Met à jour le compteur de séquence dans le DOM.
      * Sa valeur par défaut correspondant à la taille de la séquence.
-     * @param {number | undefined} count
      */
-    updateCounter(count) {
-        this.counterElement.innerHTML = typeof count === "number" 
-        ? count : this.sequenceLength;
+    updateCounter() {
+        this.counterElement.innerHTML = this.counter;
     }
 
     /**
@@ -68,9 +66,17 @@ export default class Display extends Init {
      * Affiche un fond rouge alarmant pendant 3secondes.
      */
     alertWrongSequence() {
-        this.body.classList.add("alert");
+        this.displayRedBackground(true);
         this.displayMessage(MESSAGES.looser);
-        setTimeout(() => this.body.classList.remove("alert"), 3000);
+        setTimeout(() => this.displayRedBackground(false), 3000);
+    }
+
+    /**
+     * Affiche ou supprime un fond rouge alarmant.
+     * @param {boolean} show
+     */
+    displayRedBackground(show) {
+        show ? this.body.classList.add("alert") : this.body.classList.remove("alert");
     }
 
     /**
@@ -88,5 +94,21 @@ export default class Display extends Init {
     removeMessage() {
         this.message.style.visibility = "hidden";
         this.message.innerHTML = "";
+    }
+
+    /**
+     * Inverse le bouton "start" et "reset" dans l'affichage.
+     * @param {string: "start" | "reset"} btn
+     */
+    displayButton(btn) {
+        if(btn === "start") {
+            this.startButton.style.display = "initial"; 
+            this.resetButton.style.display = "none";
+        }
+
+        if(btn === "reset") {
+            this.resetButton.style.display = "initial"; 
+            this.startButton.style.display = "none";
+        }
     }
 }
