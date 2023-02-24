@@ -1,6 +1,5 @@
 
 /**
- * INITIALISATION (getters) :
  * Définit les propriétés du tableau de bord (points, niveau, taille séquence) et le compteur.
  * Récupère tous les éléments du DOM à utiliser pour le déroulement du jeu.
  */

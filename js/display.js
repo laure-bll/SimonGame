@@ -23,7 +23,6 @@ export const SOUNDS = {
 }
 
 /**
- * MANIPULATION DU DOM (setters):
  * Gère tout ce qui concerne la modification du texte et du style dans le DOM.
  */
 export default class Display extends Init {

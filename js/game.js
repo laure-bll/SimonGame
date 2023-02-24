@@ -1,7 +1,6 @@
 import Display, { MESSAGES, SOUNDS } from "./display.js";
 
 /**
- * ACTIONS (moteur du jeu):
  * Contient chaque action du jeu.
  * Elles sont appelées selon le scénario du jeu et les clics du joueur.
  */
@@ -136,15 +135,16 @@ class Game extends Display {
             this.computerSequence.length !== this.sequenceLength 
             ? this.computerSequence.push(index) : null;
 
-            this.highlightQuarter(this.quarters[index]);
-            this.playSound(SOUNDS[`drum_${index}`]);
-            
             count === (this.sequenceLength - 1) || !this.isGameStarted
             ? (
                 clearInterval(intvl),
                 this.isPlayerTurn = true
             ) 
             : count += 1;
+            
+            this.highlightQuarter(this.quarters[index]);
+            this.playSound(SOUNDS[`drum_${index}`]);
+            
         }, 500);
     }
 
@@ -184,9 +184,9 @@ class Game extends Display {
      */
     resetGame() {
         if(this.isGameStarted) {
+            this.isGameStarted = false;
             this.playSound(SOUNDS.laser);
             this.displayMessage(MESSAGES.reset);
-            this.isGameStarted = false;
             this.displayButton("start");
             this.displayRedBackground(false);
             this.isPlayerTurn = false;
