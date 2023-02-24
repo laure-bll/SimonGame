@@ -1,4 +1,4 @@
-import Display, { MESSAGES } from "./display.js";
+import Display, { MESSAGES, SOUNDS } from "./display.js";
 
 /**
  * ACTIONS (moteur du jeu):
@@ -57,15 +57,18 @@ class Game extends Display {
      * @param {Element} el
      */
     playerTurn(el) {
-        this.isGameStarted ? this.isPlayerTurn && 
-        (
+        this.isGameStarted ?
+        this.isPlayerTurn && (
             this.removeMessage(),
             this.highlightQuarter(el),
             this.counter -= 1,
             this.updateCounter(this.counter),
             this.compareSequence(el)
         )
-        : this.displayMessage(MESSAGES.start);
+        : (
+            this.displayMessage(MESSAGES.start),
+            this.playSound(SOUNDS.wrong)
+        )
     }
 
     /**
@@ -76,19 +79,21 @@ class Game extends Display {
     compareSequence(el) {
         const selectedQuarter = this.quarters.indexOf(el);
         this.playerSequence.push(selectedQuarter);
-        const i = this.playerSequence.length - 1;
-        const expectedQuarter = this.computerSequence[i];
-
+        const seqPlayerLength = this.playerSequence.length - 1;
+        const expectedQuarter = this.computerSequence[seqPlayerLength];
+        
         if(selectedQuarter !== expectedQuarter) {
             this.alertWrongSequence();
             this.counter = this.sequenceLength;
             this.updateCounter(this.counter);
             this.playerSequence = [];
             this.isPlayerTurn = false;
+            this.playSound(SOUNDS.wrong);
             setTimeout(() => this.playSequence(), 3000);
         } else {
+            this.playSound(SOUNDS[`drum_${selectedQuarter}`]);
             if (JSON.stringify(this.playerSequence) === JSON.stringify(this.computerSequence)) {
-                this.nextLevel()
+                this.nextLevel();
             }
         }
     }
@@ -99,17 +104,19 @@ class Game extends Display {
      * durant le tour de l'ordinateur.
      */
     computerTurn() {
-        if(!this.isGameStarted) {
-            this.isGameStarted = true;
-            this.displayButton("reset");
-            this.removeMessage();
-        }
+        !this.isGameStarted ?
+        (
+            this.playSound(SOUNDS.robot),
+            this.displayButton("reset"),
+            setTimeout(() => {
+                this.isGameStarted = true;
+                this.playSequence();
+            }, 2000)
+        )
+        : this.playSequence();
 
-        // La séquence de l'ordinateur est réinitialisée.
         this.computerSequence = [];
-        this.removeMessage(),
-        this.isPlayerTurn = false;
-        this.playSequence();
+        this.removeMessage();
     }
 
     /**
@@ -130,6 +137,7 @@ class Game extends Display {
             ? this.computerSequence.push(index) : null;
 
             this.highlightQuarter(this.quarters[index]);
+            this.playSound(SOUNDS[`drum_${index}`]);
             
             count === (this.sequenceLength - 1) || !this.isGameStarted
             ? (
@@ -164,8 +172,9 @@ class Game extends Display {
         this.updateDashBoard();
         this.counter = this.sequenceLength;
         this.updateCounter();
-        // Affiche un message de réussite.
+        // Déclenche un message de réussite et des applaudissements sonores.
         this.displayMessage(MESSAGES.winner);
+        setTimeout(() => this.playSound(SOUNDS.cheer), 1000);
         // L'ordinateur lance une nouvelle séquence.
         setTimeout(() => this.computerTurn(), 3000);
     }
@@ -175,6 +184,7 @@ class Game extends Display {
      */
     resetGame() {
         if(this.isGameStarted) {
+            this.playSound(SOUNDS.laser);
             this.displayMessage(MESSAGES.reset);
             this.isGameStarted = false;
             this.displayButton("start");

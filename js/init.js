@@ -58,6 +58,8 @@ export default class Init {
     getPlayGroundElement() {
         // Récupère la zone de jeu contenant les éléments cliquables.
         this.playground = document.getElementById("playground");
+        // Récupère l'élément audio pour animer le jeu d'effets sonores.
+        this.soundElement = document.getElementById("sound");
     }
 
     getBodyElement() {

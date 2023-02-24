@@ -7,6 +7,21 @@ export const MESSAGES = {
     reset: "You reset the game ! Click the start button to try again."
 }
 
+export const SOUNDS = {
+    applause: "applaudissements.mp3",
+    beat: "battement.mp3",
+    bell: "cloche.mp3",
+    robot: "computer.mp3",
+    wrong: "docteur_maboul.mp3",
+    ole: "ole.mp3",
+    cheer: "ouais.mp3",
+    laser: "laser.mp3",
+    drum_0: "tambour_eau_medium_aigu.mp3",
+    drum_1: "tambour_eau_medium.mp3",
+    drum_2: "tambour_eau_medium_grave.mp3",
+    drum_3: "tambour_eau_grave.mp3",
+}
+
 /**
  * MANIPULATION DU DOM (setters):
  * Gère tout ce qui concerne la modification du texte et du style dans le DOM.
@@ -110,5 +125,15 @@ export default class Display extends Init {
             this.resetButton.style.display = "initial"; 
             this.startButton.style.display = "none";
         }
+    }
+
+    /**
+     * Joue un son une fois.
+     * @param {string} soundFile
+     */
+    playSound(soundFile) {
+        const filePath = window.location.href + "/sounds/" + soundFile;
+        this.soundElement.src = filePath;
+        this.soundElement.play();
     }
 }
