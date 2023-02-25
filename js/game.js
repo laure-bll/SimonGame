@@ -43,8 +43,6 @@ export default class Game extends Init {
         
         if(!isWrong) {
             this.counter = this.sequenceLength;
-            this.playerSequence = [];
-            this.isPlayerTurn = false;
         }
 
         return isWrong;
@@ -106,5 +104,7 @@ export default class Game extends Init {
     resetGame() {
         this.isGameStarted = false;
         this.isPlayerTurn = false;
+        this.sequenceLength = 4;
+        this.counter = this.sequenceLength;
     }
 }
