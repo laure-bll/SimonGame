@@ -1,4 +1,4 @@
-# LES BRANCHES
+# Les branches
 
 La branche main contient le code totalement fonctionnel du jeu.
 
