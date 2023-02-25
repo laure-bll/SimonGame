@@ -3,7 +3,7 @@
 La branche main contient le code totalement fonctionnel du jeu.
 
 La branche refactoring-interfaceAsConductor contient une version modifiée du code :
-c'est la class Display qui guide le jeu en utilisant les actions du moteur (class Game).
+c'est l'interface gaphique qui fait appelle au moteur et plus l'inverse.
 
 # Règles du jeu
 Pour commencer le jeu il faut cliquer sur START.
