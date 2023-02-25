@@ -1,4 +1,4 @@
-import Init from "./init.js";
+import Game from "./game.js";
 
 export const MESSAGES = {
     looser: "Wrong, let's try again !",
@@ -25,17 +25,161 @@ export const SOUNDS = {
 /**
  * Gère tout ce qui concerne la modification du texte et du style dans le DOM.
  */
-export default class Display extends Init {
+class Display extends Game {
     constructor() {
         super();
 
         // Set les valeurs par défaut dans le DOM.
         this.updateDashBoard();
         this.updateCounter();
+
+        this.listeningClickEvents();
+    }
+
+     /**
+     * Ecoute tout évènement "click" dans l'élément "playground".
+     */
+     listeningClickEvents() {
+        this.playground.addEventListener("click", (e) => {
+            this.dispatchAction(e.target)
+        });
     }
 
     /**
-     * Restaure toutes les valeurs par défaut.
+     * Exécute l'action correspondant à l'élément cliqué.
+     * @param {Element} el
+     */
+    dispatchAction(el) {
+        // Vérifie si l'élément cliqué à une correspondance...
+        switch (el) {
+            // ...avec l'un des quartiers
+            case this.quarters.find(quarter => el === quarter) :
+                this.onPlayerTurn(el);
+                break;
+            // ...avec le bouton "play"
+            case this.startButton:
+                this.onComputerTurn();
+                break;
+            // ...avec le bouton "reset"
+            case this.resetButton:
+                this.onReset();
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Si le jeu a commencé, affiche les actions du joueur :
+     * la case est colorée. Sinon affiche un message d'erreur.
+     * @param {Element} el
+     */
+    onPlayerTurn(el) {
+        if(this.isGameStarted) {
+            if(this.isPlayerTurn) {
+                this.highlightQuarter(el);
+                const selectedQuarter = this.quarters.indexOf(el);
+                this.playSound(SOUNDS[`drum_${selectedQuarter}`]);
+                const isWrong = this.playerTurn(selectedQuarter);
+                isWrong ? this.onLoose() : this.onWin();
+            }
+        }
+        else {
+            this.displayMessage(MESSAGES.start);
+            this.playSound(SOUNDS.wrong);
+        }
+    }
+
+    /**
+     * Affichage d'erreur quand le joueur se trompe.
+     */
+    onLoose() {
+        this.alertWrongSequence();
+        this.updateCounter(this.counter);
+        this.playSound(SOUNDS.wrong);
+        setTimeout(() => this.playSequence(), 3000);
+    }
+
+    /**
+     * Affichage du passage au niveau suivant si le joueur gagne.
+     */
+    onWin() {
+        if (JSON.stringify(this.playerSequence) === JSON.stringify(this.computerSequence)) {
+            this.nextLevel();
+            // Met à jour la vue avec les nouvelles valeurs.
+            this.updateDashBoard();
+            this.updateCounter();
+            // Déclenche un message de réussite et des applaudissements sonores.
+            this.displayMessage(MESSAGES.winner);
+            setTimeout(() => this.playSound(SOUNDS.cheer), 1000);
+        }
+    }
+
+    /**
+     * Si le jeu n'a pas commencé, lance la partie : inverse le bouton 
+     * start en reset et lance le tour de l'ordinateur. Sinon, lance
+     * simplement le tour de l'ordinateur.
+     */
+    onComputerTurn() {
+        !this.isGameStarted ?
+        (
+            this.playSound(SOUNDS.robot),
+            this.displayButton("reset"),
+            setTimeout(() => {
+                this.isGameStarted = true;
+                this.computerTurn();
+            }, 2000)
+        )
+        : this.computerTurn();
+    }
+
+    /**
+     * Informe visuellement de la fin du jeu :
+     * - message d'alerte avec effets sonore et visuel
+     * - inverse le bouton reset en start
+     * - restaure les valeurs.
+     */
+    onReset() {
+        if(this.isGameStarted) {
+            this.resetGame();
+            this.playSound(SOUNDS.laser);
+            this.displayMessage(MESSAGES.reset);
+            this.displayButton("start");
+            this.displayRedBackground(false);
+            this.restoreDefaultValues();
+        }
+    }
+
+     /**
+     * Met en surbrillance les quartiers un à un avec une intervalle de 500ms.
+     * La boucle est arrêtée quand le compteur a atteint la fin de la séquence.
+     * A la fin de la séquence, le joueur peut jouer.
+     */
+     playSequence() {
+        let count = 0;
+        
+        this.createSequence();
+
+        const intvl = setInterval(() => {
+            const index = this.computerSequence[count];
+
+            if(this.isGameStarted) {
+                count === (this.sequenceLength - 1)
+                ? (
+                    clearInterval(intvl),
+                    this.isPlayerTurn = true
+                ) 
+                : count += 1;
+    
+                this.highlightQuarter(this.quarters[index]),
+                this.playSound(SOUNDS[`drum_${index}`])
+            } else {
+                clearInterval(intvl)
+            }
+        }, 500);
+    }
+
+    /**
+     * Restaure toutes les valeurs par défaut dans le DOM.
      */
     restoreDefaultValues() {
         this.points = 0;
@@ -136,3 +280,6 @@ export default class Display extends Init {
         this.soundElement.play();
     }
 }
+
+// Instancie une nouvelle partie.
+new Display();
