@@ -103,6 +103,8 @@ class Display extends Game {
      * Affichage du passage au niveau suivant si le joueur gagne.
      */
     onWin() {
+        this.updateCounter();
+
         if (JSON.stringify(this.playerSequence) === JSON.stringify(this.computerSequence)) {
             this.nextLevel();
             // Met à jour la vue avec les nouvelles valeurs.
@@ -111,6 +113,7 @@ class Display extends Game {
             // Déclenche un message de réussite et des applaudissements sonores.
             this.displayMessage(MESSAGES.winner);
             setTimeout(() => this.playSound(SOUNDS.cheer), 1000);
+            setTimeout(() => this.playSequence(), 3100);
         }
     }
 
@@ -127,6 +130,7 @@ class Display extends Game {
             setTimeout(() => {
                 this.isGameStarted = true;
                 this.computerTurn();
+                this.playSequence();
             }, 2000)
         )
         : this.computerTurn();

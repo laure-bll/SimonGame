@@ -40,8 +40,8 @@ export default class Game extends Init {
         const seqPlayerLength = this.playerSequence.length - 1;
         const expectedQuarter = this.computerSequence[seqPlayerLength];
         const isWrong = selectedQuarter !== expectedQuarter;
-        
-        if(!isWrong) {
+
+        if(isWrong) {
             this.counter = this.sequenceLength;
         }
 
@@ -56,7 +56,7 @@ export default class Game extends Init {
     computerTurn() {
         this.computerSequence = [];
         this.removeMessage();
-        this.playSequence();
+        this.isPlayerTurn = false;
     }
 
     /**
